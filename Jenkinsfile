@@ -17,11 +17,12 @@ pipeline {
         }
 
         stage('Deploy NGINX') {
-            steps {
-                sh 'docker pull nginx'
-                sh 'docker rm -f lab-nginx || true' 
-                sh 'docker run -d --name lab-nginx -p 80:80 nginx'
-            }
+        steps {
+            sh 'docker pull nginx'
+            sh 'docker rm -f lab-nginx || true'
+            // This command mounts your local config into the NGINX container
+            sh "docker run -d --name lab-nginx -p 80:80 -v \$(pwd)/nginx:/etc/nginx/conf.d nginx"
         }
+    }
     }
 }
