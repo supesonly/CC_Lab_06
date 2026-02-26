@@ -18,8 +18,8 @@ pipeline {
 
         stage('Deploy NGINX') {
             steps {
-                // Stops any old containers and starts NGINX
                 sh 'docker pull nginx'
+                sh 'docker rm -f lab-nginx || true' 
                 sh 'docker run -d --name lab-nginx -p 80:80 nginx'
             }
         }
